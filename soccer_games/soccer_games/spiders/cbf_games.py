@@ -2,9 +2,9 @@ import scrapy
 from soccer_games.items import SoccerGamesItem
 from scrapy.loader import ItemLoader
 
-serie_a = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2021/00{i+1}' for i in range (380)]
-serie_b = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-b/2022/00{i+1}' for i in range (380)]
-serie_c = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-c/2022/00{i+1}' for i in range (190)]
+serie_a = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2022/00{i+1}' for i in range (10)]
+serie_b = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-b/2022/00{i+1}' for i in range (10)]
+serie_c = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-c/2022/00{i+1}' for i in range (10)]
 
 def tratar_hora(hora):
     # Deixar data no padrão do projeto
@@ -33,7 +33,7 @@ def tratar_local(local):
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = serie_a
+    start_urls = serie_a + serie_b + serie_c
 
     def parse(self, response):
         '''
