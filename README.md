@@ -17,14 +17,14 @@ cbf_games - Information about games of championships organised by Brazilian Conf
 EXAMPLE OF A GAME SCRAPED FROM cbf_games:
 
 {
-'cidade_jogo': 'Curitiba', #city_game
- 'data_jogo': '30/05/2021', #date_game
- 'estadio_jogo': 'Arena da Baixada', #stadium_game
- 'estado_jogo': 'PR', #state_game
- 'hora_jogo': '18:15', #hour_game
- 'nome_campeonato': 'Campeonato Brasileiro Série A', #name_championship
- 'numero_jogo': 8, #number_game
- 'rodada_jogo': 1, #round_game
- 'time_mandante': 'Athletico - PR', #home_team
- 'time_visitante': 'América - MG' #away_team
+'cidade_jogo': 'Curitiba', #city_game<br />
+ 'data_jogo': '30/05/2021', #date_game<br />
+ 'estadio_jogo': 'Arena da Baixada', #stadium_game<br />
+ 'estado_jogo': 'PR', #state_game<br />
+ 'hora_jogo': '18:15', #hour_game<br />
+ 'nome_campeonato': 'Campeonato Brasileiro Série A', #name_championship<br />
+ 'numero_jogo': 8, #number_game<br />
+ 'rodada_jogo': 1, #round_game<br />
+ 'time_mandante': 'Athletico - PR', #home_team<br />
+ 'time_visitante': 'América - MG' #away_team<br />
  }
