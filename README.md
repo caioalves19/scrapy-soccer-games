@@ -5,7 +5,7 @@ Spiders:
 cbf_games - Pega informações de campeonatos presentes no site da Confederação Brasileira de Futebol (CBF).
 
 
-
+ENGLISH
 This project has the goal to scraping information about soccer games (teams, date, hour, local and so on) from a few websites. The initial intent is control changes on the schedule and not on score. Focused on brazilian soccer games.
 
 Spiders:
