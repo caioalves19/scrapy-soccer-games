@@ -2,9 +2,9 @@ import scrapy
 from soccer_games.items import SoccerGamesItem
 from scrapy.loader import ItemLoader
 
-serie_a = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2022/00{i+1}' for i in range (10)]
-serie_b = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-b/2022/00{i+1}' for i in range (10)]
-serie_c = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-c/2022/00{i+1}' for i in range (10)]
+serie_a = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2022/00{i+1}' for i in range (380)]
+serie_b = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-b/2022/00{i+1}' for i in range (380)]
+serie_c = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-c/2022/00{i+1}' for i in range (380)]
 
 def tratar_hora(hora):
     # Deixar data no padrão do projeto
@@ -55,7 +55,7 @@ class CbfGamesSpider(scrapy.Spider):
         jogo.add_value('estadio_jogo', local_jogo[0])
         jogo.add_value('cidade_jogo', local_jogo[1])
         jogo.add_value('estado_jogo', local_jogo[2])
-        jogo.add_value('data_jogo', data_jogo)
+        jogo.add_value('data_jogo', data_jogo.replace('/', '-'))
         jogo.add_value('hora_jogo', hora_jogo)
         jogo.add_value('numero_jogo', numero_jogo)
         jogo.add_value('rodada_jogo', rodada_jogo(numero_jogo))
