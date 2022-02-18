@@ -1,11 +1,9 @@
-from cgitb import html
 from scrapy.selector import Selector
 import scrapy
 from selenium.webdriver import Chrome, ChromeOptions
 from time import sleep
 from soccer_games.items import SoccerGamesItem
 from scrapy.loader import ItemLoader
-import json
 
 
 def tratar_locais(locais):
@@ -34,31 +32,41 @@ class FpfGamesSpider(scrapy.Spider):
     start_urls = ['https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1']
 
     def __init__(self):
-        driver.get("https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1")
+        driver.get('https://futebolpaulista.com.br/Competicoes')
         sleep(2)
         btn_aceitar = driver.find_element_by_css_selector('.js-aceitar')
         btn_aceitar.click()
-        sleep(2)
-        self.html_lista = []
-        for i in range(2):
-            btn_rodadas = driver.find_elements_by_css_selector('#combo-rodadas .bt')[1]
-            btn_rodadas.click()
-            sleep(1)
 
-            rodadas = driver.find_elements_by_css_selector('#combo-rodadas a')
-            rodadas = rodadas[-15::]
-
-            rodadas[i].click()
+        campeonatos = ['Paulistão Sicredi', 'Paulistão A2', 'Paulistão A3']
+        
+        for campeonato in campeonatos:
+            btn_campeonatos = driver.find_elements_by_css_selector('.bt-selecione-comp')[0]
+            btn_campeonatos.click()
             sleep(2)
-
-            btn_impressao = driver.find_element_by_css_selector('.lnk-impressao')
-            btn_impressao.click()
+            opcoes_campeonatos = driver.find_element_by_xpath(f"//a[@class='itemCampeonatoTabela' and contains(text(), '{campeonato}')]")
+            opcoes_campeonatos.click()
+            input('deu certo?')
             sleep(2)
-            self.html_lista.append(driver.page_source)
+            self.html_lista = []
+            for i in range(1):
+                btn_rodadas = driver.find_elements_by_css_selector('#combo-rodadas .bt')[1]
+                btn_rodadas.click()
+                sleep(1)
 
-            btn_fechar = driver.find_element_by_css_selector('.close-modal')
-            btn_fechar.click()
-            sleep(2)
+                rodadas = driver.find_elements_by_css_selector('#combo-rodadas a')
+                rodadas = rodadas[-10::]
+
+                rodadas[i].click()
+                sleep(2)
+
+                btn_impressao = driver.find_element_by_css_selector('.lnk-impressao')
+                btn_impressao.click()
+                sleep(2)
+                self.html_lista.append(driver.page_source)
+
+                btn_fechar = driver.find_element_by_css_selector('.close-modal')
+                btn_fechar.click()
+                sleep(2)
         driver.close()
 
     def parse(self, response):
