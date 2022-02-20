@@ -108,6 +108,7 @@ class FpfGamesSpider(scrapy.Spider):
 
             locais = tratar_locais(locais)
 
+            #Descobrir de qual campeonato são os jogos
             for i in range(len(times_mandantes)):
                 if (
                     'Palmeiras' in times_mandantes[i]
@@ -125,7 +126,7 @@ class FpfGamesSpider(scrapy.Spider):
                 ):
                     nome_campeonato = 'Campeonato Paulista - Série A3'
 
-            for i in range(8):
+            for i in range(len(times_mandantes)):
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
                 jogo.add_value(
                     'time_mandante', times_mandantes[i].strip() + ' - SP'
