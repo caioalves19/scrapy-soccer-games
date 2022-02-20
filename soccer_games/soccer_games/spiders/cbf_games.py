@@ -2,6 +2,7 @@ import scrapy
 from scrapy.loader import ItemLoader
 from soccer_games.items import SoccerGamesItem
 
+
 def tratar_hora(hora):
     # Deixar data no padrão do projeto
     if not hora:
@@ -15,8 +16,8 @@ def tratar_data(data):
     return data
 
 
-def rodada_jogo(nome_campeonato, numero_jogo, numero_jogos = 10):
-    #Usa o número do jogo para descobrir de qual rodada é. O numero_jogos é quantidade de jogos por rodada do campeonato.
+def rodada_jogo(nome_campeonato, numero_jogo, numero_jogos=10):
+    # Usa o número do jogo para descobrir de qual rodada é. O numero_jogos é quantidade de jogos por rodada do campeonato.
     if 'Copa do Nordeste' in nome_campeonato:
         numero_jogos = 8
     rodada = numero_jogo // numero_jogos
@@ -42,6 +43,7 @@ def tratar_nome_campeonato(link_nome):
     if link_nome == 'copa-nordeste-masculino':
         return 'Copa do Nordeste - Única'
 
+
 serie_a = [
     f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2022/00{i+1}'
     for i in range(380)
@@ -54,8 +56,12 @@ serie_c = [
     f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-c/2022/00{i+1}'
     for i in range(190)
 ]
-copa_ne = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/copa-nordeste-masculino/2022/00{i+1}'
-    for i in range(64)]
+copa_ne = [
+    f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/copa-nordeste-masculino/2022/00{i+1}'
+    for i in range(64)
+]
+
+
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
@@ -92,7 +98,9 @@ class CbfGamesSpider(scrapy.Spider):
         jogo.add_value('data_jogo', data_jogo.replace('/', '-'))
         jogo.add_value('hora_jogo', hora_jogo)
         jogo.add_value('numero_jogo', numero_jogo)
-        jogo.add_value('rodada_jogo', rodada_jogo(nome_campeonato, numero_jogo))
+        jogo.add_value(
+            'rodada_jogo', rodada_jogo(nome_campeonato, numero_jogo)
+        )
         jogo.add_value('nome_campeonato', nome_campeonato)
 
         return jogo.load_item()

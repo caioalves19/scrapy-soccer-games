@@ -19,10 +19,6 @@ def tratar_locais(locais):
     return estadios, cidades
 
 
-def rodada_jogo(numero_jogo, nome_campeonato):
-    ...
-
-
 options = ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 options.add_argument('--headless')
@@ -44,12 +40,14 @@ class FpfGamesSpider(scrapy.Spider):
         btn_aceitar.click()
 
         campeonatos = [
-            ('Paulistão Sicredi', 12),
-            ('Paulistão A2', 15),
-            ('Paulistão A3', 15),
+            ('Paulistão Sicredi', 'Campeonato Paulista - Série A1', 12),
+            ('Paulistão A2', 'Campeonato Paulista - Série A2', 15),
+            ('Paulistão A3', 'Campeonato Paulista - Série A3', 15),
         ]
         self.html_lista = []
+        self.nomes_campeonatos = []
         for campeonato in campeonatos:
+            self.nomes_campeonatos.append(campeonato[1])
             btn_campeonatos = driver.find_elements_by_css_selector(
                 '.bt-selecione-comp'
             )[0]
@@ -60,7 +58,7 @@ class FpfGamesSpider(scrapy.Spider):
             )
             opcoes_campeonatos.click()
             sleep(2)
-            for i in range(2):
+            for i in range(1):
                 btn_rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas .bt'
                 )[1]
@@ -70,7 +68,7 @@ class FpfGamesSpider(scrapy.Spider):
                 rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas a'
                 )
-                rodadas = rodadas[-campeonato[1] : :]
+                rodadas = rodadas[-campeonato[2] : :]
 
                 rodadas[i].click()
                 sleep(2)
@@ -108,23 +106,7 @@ class FpfGamesSpider(scrapy.Spider):
 
             locais = tratar_locais(locais)
 
-            #Descobrir de qual campeonato são os jogos
-            for i in range(len(times_mandantes)):
-                if (
-                    'Palmeiras' in times_mandantes[i]
-                    or 'Palmeiras' in times_visitantes[i]
-                ):
-                    nome_campeonato = 'Campeonato Paulista - Série A1'
-                elif (
-                    'São Bento' in times_mandantes[i]
-                    or 'São Bento' in times_visitantes[i]
-                ):
-                    nome_campeonato = 'Campeonato Paulista - Série A2'
-                elif (
-                    'Primavera' in times_mandantes[i]
-                    or 'Primavera' in times_visitantes[i]
-                ):
-                    nome_campeonato = 'Campeonato Paulista - Série A3'
+            nome_campeonato = self.nomes_campeonatos[i]
 
             for i in range(len(times_mandantes)):
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
