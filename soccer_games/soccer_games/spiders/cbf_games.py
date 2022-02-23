@@ -64,8 +64,8 @@ serie_c = [
     for i in range(190)
 ]
 
-serie_d = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-d/2022/00{i+25}'
-    for i in range(10)]
+serie_d = [f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-d/2022/00{i+1}'
+    for i in range(448)]
 copa_ne = [
     f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/copa-nordeste-masculino/2022/00{i+1}'
     for i in range(68)
