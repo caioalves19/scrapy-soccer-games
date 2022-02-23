@@ -97,7 +97,6 @@ class CbfGamesSpider(scrapy.Spider):
         jogo.add_value('estado_jogo', local_jogo[2])
         jogo.add_value('data_jogo', data_jogo.replace('/', '-'))
         jogo.add_value('hora_jogo', hora_jogo)
-        jogo.add_value('numero_jogo', numero_jogo)
         jogo.add_value(
             'rodada_jogo', rodada_jogo(nome_campeonato, numero_jogo)
         )

@@ -100,13 +100,13 @@ class FpfGamesSpider(scrapy.Spider):
             datas = resp.css('.tabela-placar .data::text').getall()
             horarios = resp.css('.tabela-placar .horario::text').getall()
             locais = resp.css('.mais-informacoes::text').getall()
-            numeros = resp.css('.tabela-placar .jogo::text').getall()
             rodada = resp.css('.titulo-rodada strong::text').getall()
             rodada = int(rodada[0].split('Rodada ')[1])
 
             locais = tratar_locais(locais)
 
             nome_campeonato = self.nomes_campeonatos[i]
+            print(nome_campeonato)
 
             for i in range(len(times_mandantes)):
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
@@ -121,9 +121,6 @@ class FpfGamesSpider(scrapy.Spider):
                 jogo.add_value('estado_jogo', 'SP')
                 jogo.add_value('data_jogo', datas[i].replace('/', '-'))
                 jogo.add_value('hora_jogo', horarios[i].replace('h', ':'))
-                jogo.add_value(
-                    'numero_jogo', int(numeros[i].split('nº')[1].strip())
-                )
                 jogo.add_value('rodada_jogo', rodada)
                 jogo.add_value('nome_campeonato', nome_campeonato)
 
