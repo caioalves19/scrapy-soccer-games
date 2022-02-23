@@ -1,10 +1,12 @@
 from time import sleep
+from xmlrpc.client import DateTime
 
 import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.selector import Selector
 from selenium.webdriver import Chrome, ChromeOptions
 from soccer_games.items import SoccerGamesItem
+from datetime import date, datetime
 
 
 def tratar_locais(locais):
@@ -19,6 +21,7 @@ def tratar_locais(locais):
     return estadios, cidades
 
 
+data_hoje = date.today()
 options = ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 options.add_argument('--headless')
@@ -108,7 +111,13 @@ class FpfGamesSpider(scrapy.Spider):
             nome_campeonato = self.nomes_campeonatos[i]
             print(nome_campeonato)
 
+            
+
             for i in range(len(times_mandantes)):
+                data_jogo = datas[i].split('/')
+                data_jogo = date(int(data_jogo[2]), int(data_jogo[1]), int(data_jogo[0]))
+                if data_jogo < data_hoje:
+                    continue
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
                 jogo.add_value(
                     'time_mandante', times_mandantes[i].strip() + ' - SP'

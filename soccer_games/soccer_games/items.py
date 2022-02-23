@@ -42,6 +42,7 @@ def tratar_time(time):
         'Suzano': 'União Suzano',
         'São José EC': 'São José',
         'Bandeirante EC': 'Bandeirante',
+        'Gremio Anapolis': 'Grêmio Anápolis', 'Nova Venecia F. C.': 'Nova Venécia', 'Marica': 'Maricá', 'Gloria': 'Glória'
     }
 
     if time[0] in nomes_times:

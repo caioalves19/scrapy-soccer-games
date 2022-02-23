@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from soccer_games.items import SoccerGamesItem
+from datetime import date
 
 
 def tratar_hora(hora):
@@ -44,6 +45,8 @@ def tratar_nome_campeonato(link_nome):
         return 'Copa do Nordeste - Única'
 
 
+data_hoje = date.today()
+
 serie_a = [
     f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2022/00{i+1}'
     for i in range(380)
@@ -57,8 +60,8 @@ serie_c = [
     for i in range(190)
 ]
 copa_ne = [
-    f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/copa-nordeste-masculino/2022/00{i+1}'
-    for i in range(64)
+    f'https://www.cbf.com.br/amp/futebol-brasileiro/competicoes/copa-nordeste-masculino/2022/00{i+44}'
+    for i in range(10)
 ]
 
 
@@ -80,6 +83,13 @@ class CbfGamesSpider(scrapy.Spider):
             response.css('.col-xs-12 span::text').getall()
         )
         data_jogo = tratar_data(response.css('.col-xs-6 span::text').get())
+        data_partida = data_jogo.strip().split('/')
+        try:
+            data_partida = date(int(data_partida[2]), int(data_partida[1]), int(data_partida[0]))
+        except Exception:
+            data_partida = date(2023, 1, 1)
+        if data_partida < data_hoje:
+                return
         hora_jogo = tratar_hora(response.css('.col-xs-6 .text-6::text').get())
         numero_jogo = int(response.url[-3::])
         nome_campeonato = tratar_nome_campeonato(response.url.split('/')[-3])
