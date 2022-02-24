@@ -12,7 +12,7 @@ def tratar_time(time):
     if 'a definir' in time[0].lower():
         return 'Selecione um clube'
     # Tratar nomes para ficar de acordo com o projeto
-    # Corrigir erros gramaticais
+    # Corrigir acentuação
     nomes_times = {
         'America': 'América',
         'Sampaio Correa': 'Sampaio Corrêa',
@@ -166,5 +166,4 @@ class SoccerGamesItem(Item):
     estado_jogo = Field(output_processor=Compose(TakeFirst(), str.strip))
     data_jogo = Field(output_processor=Compose(TakeFirst(), str.strip))
     hora_jogo = Field(output_processor=Compose(TakeFirst(), str.strip))
-    numero_jogo = Field(output_processor=TakeFirst())
     rodada_jogo = Field(output_processor=TakeFirst())
