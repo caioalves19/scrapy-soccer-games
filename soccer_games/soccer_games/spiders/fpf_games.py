@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from time import sleep
 from xmlrpc.client import DateTime
 
@@ -5,8 +6,8 @@ import scrapy
 from scrapy.loader import ItemLoader
 from scrapy.selector import Selector
 from selenium.webdriver import Chrome, ChromeOptions
+
 from soccer_games.items import SoccerGamesItem
-from datetime import date, datetime
 
 
 def tratar_locais(locais):
@@ -36,6 +37,8 @@ class FpfGamesSpider(scrapy.Spider):
         'https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1'
     ]
 
+    f = open("../futebol_interior/fpf_games.json", 'w').close()
+
     def __init__(self):
         driver.get('https://futebolpaulista.com.br/Competicoes')
         sleep(2)
@@ -43,25 +46,25 @@ class FpfGamesSpider(scrapy.Spider):
         btn_aceitar.click()
 
         campeonatos = [
-            ('Paulistão Sicredi', 'Campeonato Paulista - Série A1', 12),
-            ('Paulistão A2', 'Campeonato Paulista - Série A2', 15),
-            ('Paulistão A3', 'Campeonato Paulista - Série A3', 15),
+            {'nome_campeonato_fpf': 'Paulistão Sicredi', 'nome_campeonato_correto': 'Campeonato Paulista - Série A1', 'numero_rodadas': 12},
+            {'nome_campeonato_fpf': 'Paulistão A2', 'nome_campeonato_correto': 'Campeonato Paulista - Série A2', 'numero_rodadas': 15},
+            {'nome_campeonato_fpf': 'Paulistão A3', 'nome_campeonato_correto': 'Campeonato Paulista - Série A3', 'numero_rodadas': 15},
         ]
         self.html_lista = []
         self.nomes_campeonatos = []
         for campeonato in campeonatos:
-            self.nomes_campeonatos.append(campeonato[1])
             btn_campeonatos = driver.find_elements_by_css_selector(
                 '.bt-selecione-comp'
             )[0]
             btn_campeonatos.click()
             sleep(2)
             opcoes_campeonatos = driver.find_element_by_xpath(
-                f"//a[@class='itemCampeonatoTabela' and contains(text(), '{campeonato[0]}')]"
+                f"//a[@class='itemCampeonatoTabela' and contains(text(), '{campeonato['nome_campeonato_fpf']}')]"
             )
             opcoes_campeonatos.click()
             sleep(2)
-            for i in range(1):
+            for i in range(campeonato['numero_rodadas']):
+                self.nomes_campeonatos.append(campeonato["nome_campeonato_correto"])
                 btn_rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas .bt'
                 )[1]
@@ -71,7 +74,7 @@ class FpfGamesSpider(scrapy.Spider):
                 rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas a'
                 )
-                rodadas = rodadas[-campeonato[2] : :]
+                rodadas = rodadas[-campeonato["numero_rodadas"] : :]
 
                 rodadas[i].click()
                 sleep(2)
@@ -111,11 +114,11 @@ class FpfGamesSpider(scrapy.Spider):
             nome_campeonato = self.nomes_campeonatos[i]
             print(nome_campeonato)
 
-            
-
             for i in range(len(times_mandantes)):
                 data_jogo = datas[i].split('/')
-                data_jogo = date(int(data_jogo[2]), int(data_jogo[1]), int(data_jogo[0]))
+                data_jogo = date(
+                    int(data_jogo[2]), int(data_jogo[1]), int(data_jogo[0])
+                )
                 if data_jogo < data_hoje:
                     continue
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)

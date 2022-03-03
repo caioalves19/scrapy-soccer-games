@@ -42,7 +42,10 @@ def tratar_time(time):
         'Suzano': 'União Suzano',
         'São José EC': 'São José',
         'Bandeirante EC': 'Bandeirante',
-        'Gremio Anapolis': 'Grêmio Anápolis', 'Nova Venecia F. C.': 'Nova Venécia', 'Marica': 'Maricá', 'Gloria': 'Glória'
+        'Gremio Anapolis': 'Grêmio Anápolis', 'Nova Venecia F. C.': 'Nova Venécia', 'Marica': 'Maricá', 'Gloria': 'Glória',
+        'Vasco da Gama': 'Vasco', 'Real Noroeste F. C.': 'Real Noroeste',
+        'Associação Atlética Esmac Ananindeua': 'Esmac', 'Cruzeiro Saf': 'Cruzeiro',
+        'Estádio Beira Rio': 'Beira-Rio'
     }
 
     if time[0] in nomes_times:
@@ -54,6 +57,7 @@ def tratar_time(time):
 def tratar_cidade(cidade):
     # Corrigir erros gramaticais
     nomes_cidades = {
+        'Aguia Branca': 'Águia Branca',
         'Sao Paulo': 'São Paulo',
         'Bento Goncalves': 'Bento Gonçalves',
         'Itajai': 'Itajaí',
@@ -97,6 +101,7 @@ def tratar_cidade(cidade):
         'Sao Bernardo do Campo': 'São Bernardo do Campo',
         'Tocantinopolis': 'Tocantinópolis',
         'Monte Azul': 'Monte Azul Paulista',
+        'Nova Venecia': 'Nova Venécia',
     }
 
     if cidade in nomes_cidades:
@@ -115,6 +120,8 @@ def tratar_estadio(estadio):
     estadio = estadio.replace('Dr. ', '')
     estadio = estadio.replace('Doutor ', '')
     nomes_estadios = {
+        'Florestão': 'Arena da Floresta',
+        'Fonte Luminosa': 'Arena Fonte Luminosa',
         'Manoel Barradas': 'Barradão',
         'Ct Rei Pelé': 'CT Rei Pelé',
         'CAT do Cajú': 'CAT do Caju',

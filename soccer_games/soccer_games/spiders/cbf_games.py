@@ -20,13 +20,13 @@ def tratar_data(data):
     return data.replace('/', '-')
 
 
-def rodada_jogo(nome_campeonato, numero_jogo, quantidade_jogos_rodada=10):
+def rodada_jogo(nome_campeonato, numero_jogo):
     # Usa o número do jogo para descobrir de qual rodada é. O quantidade_jogos_rodada é quantidade de jogos por rodada do campeonato.
-    if 'Copa do Nordeste' in nome_campeonato:
-        quantidade_jogos_rodada = 8
-    if 'Série D' in nome_campeonato:
-        quantidade_jogos_rodada = 32
+    campeonatos = {'Copa do Nordeste': 8, 'Série D': 32, 'Copa do Brasil': 40}
+
+    quantidade_jogos_rodada = campeonatos.get(nome_campeonato.split(' - ')[0], 10)
     rodada = numero_jogo // quantidade_jogos_rodada
+    
     if numero_jogo % quantidade_jogos_rodada != 0:
         rodada += 1
     return rodada
@@ -42,15 +42,15 @@ def obter_local(response):
 
 
 def obter_nome_campeonato(response):
-    link_nome = response.url.split('/')[-3]
     # Deixar o nome do campeonato no padrão necessário. "Nome do Campeonato - Divisão do Campeonato"
+    link_nome = response.url.split('/')[-3]
     campeonatos = {
         'campeonato-brasileiro-serie-a': 'Campeonato Brasileiro - Série A',
         'campeonato-brasileiro-serie-b': 'Campeonato Brasileiro - Série B',
         'campeonato-brasileiro-serie-c': 'Campeonato Brasileiro - Série C',
         'campeonato-brasileiro-serie-d': 'Campeonato Brasileiro - Série D',
         'copa-nordeste-masculino': 'Copa do Nordeste - Única',
-        'copa-brasil-masculino': 'Copa do Brasil - Única'
+        'copa-brasil-masculino': 'Copa do Brasil - Única',
     }
     return campeonatos.get(link_nome)
 
@@ -63,12 +63,14 @@ with open('links_cbf.json', 'r') as f:
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = links_cbf[-2::]
+    start_urls = [links_cbf[5]]
+
+    f = open("../futebol_interior/cbf_games.json", 'w').close()
 
     def parse(self, response):
         # Entra na página inicial de cada campeonato e obtém links de jogos que ainda não aconteceram
         links = response.css('.btn-info::attr(href)').getall()
-        
+
         for link in links:
             # Ajusta o link para aversão amp, página mais organizada para pegar as informações
             link = link.split('br/')
