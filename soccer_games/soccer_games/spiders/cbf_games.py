@@ -8,7 +8,7 @@ from soccer_games.items import SoccerGamesItem
 
 def tratar_hora(hora):
     # Deixar data no padrão do projeto
-    if not hora:
+    if not hora or 'a definir' in hora.lower():
         return '00:00'
     return hora
 
@@ -22,13 +22,25 @@ def tratar_data(data):
 
 def rodada_jogo(nome_campeonato, numero_jogo):
     # Usa o número do jogo para descobrir de qual rodada é. O quantidade_jogos_rodada é quantidade de jogos por rodada do campeonato.
-    campeonatos = {'Copa do Nordeste': 8, 'Série D': 32, 'Copa do Brasil': 40}
+    campeonatos = {
+        'Copa do Nordeste - Única': [8],
+        'Campeonato Brasileiro - Série D': [32],
+        'Copa do Brasil - Única': [40],
+        'Campeonato Brasileiro Feminino - A1': [8],
+    }
 
-    quantidade_jogos_rodada = campeonatos.get(nome_campeonato.split(' - ')[0], 10)
-    rodada = numero_jogo // quantidade_jogos_rodada
-    
+    quantidade_jogos_rodada = campeonatos.get(nome_campeonato, 10)[0]
+
+    try:
+        contagem_jogos_inicial = campeonatos.get(nome_campeonato)[1]
+    except Exception:
+        contagem_jogos_inicial = 0
+
+    rodada = (numero_jogo - contagem_jogos_inicial) // quantidade_jogos_rodada
+
     if numero_jogo % quantidade_jogos_rodada != 0:
         rodada += 1
+
     return rodada
 
 
@@ -51,8 +63,34 @@ def obter_nome_campeonato(response):
         'campeonato-brasileiro-serie-d': 'Campeonato Brasileiro - Série D',
         'copa-nordeste-masculino': 'Copa do Nordeste - Única',
         'copa-brasil-masculino': 'Copa do Brasil - Única',
+        'campeonato-brasileiro-feminino-a1': 'Campeonato Brasileiro Feminino - A1',
     }
     return campeonatos.get(link_nome)
+
+
+def obter_fase_jogo(numero_jogo, nome_campeonato):
+    fases = []
+    if 'Copa do Brasil' in nome_campeonato:
+        fases = [
+            'Primeira Fase',
+            'Segunda Fase',
+            'Terceira Fase',
+            'Oitavas de Final',
+            'Quartas de Final',
+            'Semifinais',
+            'Final',
+        ]
+        numero_fases = [40, 60, 92, 108, 116, 120, 122]
+
+    elif 'Feminino - A1' in nome_campeonato:
+        fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
+        numero_fases = [120, 128, 132, 134]
+
+    for i in range(len(fases)):
+        if numero_jogo <= numero_fases[i]:
+            return fases[i]
+
+    return 'Única'
 
 
 # Links com todos os campeonatos necessários para scraping da CBF
@@ -63,9 +101,9 @@ with open('links_cbf.json', 'r') as f:
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = [links_cbf[5]]
+    start_urls = links_cbf[5::]
 
-    f = open("../futebol_interior/cbf_games.json", 'w').close()
+    f = open('../futebol_interior/cbf_games.json', 'w').close()
 
     def parse(self, response):
         # Entra na página inicial de cada campeonato e obtém links de jogos que ainda não aconteceram
@@ -96,7 +134,7 @@ class CbfGamesSpider(scrapy.Spider):
         local_jogo = obter_local(response)
         jogo.add_value('estadio_jogo', local_jogo[0])
         jogo.add_value('cidade_jogo', local_jogo[1])
-        jogo.add_value('estado_jogo', local_jogo[2])
+        jogo.add_value('estado_jogo', local_jogo[-1])
 
         data_jogo = tratar_data(response.css('.col-xs-6 span::text').get())
         jogo.add_value('data_jogo', data_jogo)
@@ -105,8 +143,14 @@ class CbfGamesSpider(scrapy.Spider):
         jogo.add_value('hora_jogo', hora_jogo)
 
         numero_jogo = int(response.url.split('/')[-1].split('?')[0])
+        jogo.add_value('numero_jogo', numero_jogo)
+
         jogo.add_value(
             'rodada_jogo', rodada_jogo(nome_campeonato, numero_jogo)
+        )
+
+        jogo.add_value(
+            'fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato)
         )
 
         return jogo.load_item()

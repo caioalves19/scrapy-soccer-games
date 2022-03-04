@@ -173,4 +173,6 @@ class SoccerGamesItem(Item):
     estado_jogo = Field(output_processor=Compose(TakeFirst(), str.strip))
     data_jogo = Field(output_processor=Compose(TakeFirst(), str.strip))
     hora_jogo = Field(output_processor=Compose(TakeFirst(), str.strip))
+    numero_jogo = Field(output_processor=TakeFirst())
     rodada_jogo = Field(output_processor=TakeFirst())
+    fase_jogo = Field(output_processor=TakeFirst())

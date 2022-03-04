@@ -37,7 +37,7 @@ class FpfGamesSpider(scrapy.Spider):
         'https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1'
     ]
 
-    f = open("../futebol_interior/fpf_games.json", 'w').close()
+    f = open('../futebol_interior/fpf_games.json', 'w').close()
 
     def __init__(self):
         driver.get('https://futebolpaulista.com.br/Competicoes')
@@ -46,9 +46,21 @@ class FpfGamesSpider(scrapy.Spider):
         btn_aceitar.click()
 
         campeonatos = [
-            {'nome_campeonato_fpf': 'Paulistão Sicredi', 'nome_campeonato_correto': 'Campeonato Paulista - Série A1', 'numero_rodadas': 12},
-            {'nome_campeonato_fpf': 'Paulistão A2', 'nome_campeonato_correto': 'Campeonato Paulista - Série A2', 'numero_rodadas': 15},
-            {'nome_campeonato_fpf': 'Paulistão A3', 'nome_campeonato_correto': 'Campeonato Paulista - Série A3', 'numero_rodadas': 15},
+            {
+                'nome_campeonato_fpf': 'Paulistão Sicredi',
+                'nome_campeonato_correto': 'Campeonato Paulista - Série A1',
+                'numero_rodadas': 12,
+            },
+            {
+                'nome_campeonato_fpf': 'Paulistão A2',
+                'nome_campeonato_correto': 'Campeonato Paulista - Série A2',
+                'numero_rodadas': 15,
+            },
+            {
+                'nome_campeonato_fpf': 'Paulistão A3',
+                'nome_campeonato_correto': 'Campeonato Paulista - Série A3',
+                'numero_rodadas': 15,
+            },
         ]
         self.html_lista = []
         self.nomes_campeonatos = []
@@ -63,8 +75,11 @@ class FpfGamesSpider(scrapy.Spider):
             )
             opcoes_campeonatos.click()
             sleep(2)
-            for i in range(campeonato['numero_rodadas']):
-                self.nomes_campeonatos.append(campeonato["nome_campeonato_correto"])
+            # for i in range(campeonato['numero_rodadas']):
+            for i in range(2):
+                self.nomes_campeonatos.append(
+                    campeonato['nome_campeonato_correto']
+                )
                 btn_rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas .bt'
                 )[1]
@@ -74,7 +89,7 @@ class FpfGamesSpider(scrapy.Spider):
                 rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas a'
                 )
-                rodadas = rodadas[-campeonato["numero_rodadas"] : :]
+                rodadas = rodadas[-campeonato['numero_rodadas'] : :]
 
                 rodadas[i].click()
                 sleep(2)
