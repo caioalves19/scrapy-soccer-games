@@ -23,13 +23,13 @@ def tratar_data(data):
 def rodada_jogo(nome_campeonato, numero_jogo):
     # Usa o número do jogo para descobrir de qual rodada é. O quantidade_jogos_rodada é quantidade de jogos por rodada do campeonato.
     campeonatos = {
-        'Copa do Nordeste - Única': [8],
-        'Campeonato Brasileiro - Série D': [32],
-        'Copa do Brasil - Única': [40],
-        'Campeonato Brasileiro Feminino - A1': [8],
+        'Copa do Nordeste - Única': [8, 0],
+        'Campeonato Brasileiro - Série D': [32, 0],
+        'Copa do Brasil - Única': [40, 0],
+        'Campeonato Brasileiro Feminino - A1': [8, 0],
     }
 
-    quantidade_jogos_rodada = campeonatos.get(nome_campeonato, 10)[0]
+    quantidade_jogos_rodada = campeonatos.get(nome_campeonato, [10,0])[0]
 
     try:
         contagem_jogos_inicial = campeonatos.get(nome_campeonato)[1]
@@ -86,6 +86,10 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
         numero_fases = [120, 128, 132, 134]
 
+    elif 'Campeonato Paulista - Série A1' in nome_campeonato:
+        fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
+        numero_fases = [96, 104, 108, 110]
+
     for i in range(len(fases)):
         if numero_jogo <= numero_fases[i]:
             return fases[i]
@@ -94,16 +98,16 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
 
 
 # Links com todos os campeonatos necessários para scraping da CBF
-with open('links_cbf.json', 'r') as f:
+with open('D:\Caio\Projetos-Python\scrapy-soccer-games\soccer_games\links_cbf.json', 'r') as f:
     links_cbf = json.load(f)
 
 
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = links_cbf[5::]
+    start_urls = links_cbf
 
-    f = open('../futebol_interior/cbf_games.json', 'w').close()
+    f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\cbf_games.json', 'w').close()
 
     def parse(self, response):
         # Entra na página inicial de cada campeonato e obtém links de jogos que ainda não aconteceram

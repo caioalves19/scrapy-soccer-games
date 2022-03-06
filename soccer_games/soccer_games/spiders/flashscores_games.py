@@ -73,7 +73,7 @@ class FlashscoresGamesSpider(scrapy.Spider):
     name = 'flashscores_games'
     allowed_domains = ['www.flashscore.com.br']
     start_urls = ['https://www.flashscore.com.br']
-    f = open('../futebol_interior/flashscore_games.json', 'w').close()
+    f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\flashscore_games.json', 'w').close()
     def __init__(self):
         self.html_lista = []
         for link in links:

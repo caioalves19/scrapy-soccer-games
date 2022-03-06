@@ -9,6 +9,8 @@ from selenium.webdriver import Chrome, ChromeOptions
 
 from soccer_games.items import SoccerGamesItem
 
+# from cbf_games import obter_fase_jogo
+
 
 def tratar_locais(locais):
     for i in range(len(locais)):
@@ -37,7 +39,7 @@ class FpfGamesSpider(scrapy.Spider):
         'https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1'
     ]
 
-    f = open('../futebol_interior/fpf_games.json', 'w').close()
+    f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\fpf_games.json', 'w').close()
 
     def __init__(self):
         driver.get('https://futebolpaulista.com.br/Competicoes')
@@ -136,7 +138,11 @@ class FpfGamesSpider(scrapy.Spider):
                 )
                 if data_jogo < data_hoje:
                     continue
+                
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
+                
+                jogo.add_value('nome_campeonato', nome_campeonato)
+                
                 jogo.add_value(
                     'time_mandante', times_mandantes[i].strip() + ' - SP'
                 )
@@ -148,7 +154,15 @@ class FpfGamesSpider(scrapy.Spider):
                 jogo.add_value('estado_jogo', 'SP')
                 jogo.add_value('data_jogo', datas[i].replace('/', '-'))
                 jogo.add_value('hora_jogo', horarios[i].replace('h', ':'))
+                
+                # numeros_jogos = resp.css('.jogo::text').getall()
+                # numeros_jogos.pop(0)
+                # for numero in numeros_jogos:
+                #     numero = int(numero.strip()[-2::])
+                # numero_jogo = numeros_jogos[i]
+                # jogo.add_value('numero_jogo', numeros_jogos[i])
+                
                 jogo.add_value('rodada_jogo', rodada)
-                jogo.add_value('nome_campeonato', nome_campeonato)
+                # jogo.add_value('fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato))
 
                 yield jogo.load_item()
