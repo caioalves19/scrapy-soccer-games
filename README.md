@@ -23,7 +23,7 @@ Exemplo de resultado de um spider:
  'numero_jogo': 8,
  'rodada_jogo': 1,
  'time_mandante': 'Athletico - PR',
- 'time_visitante': 'América - MG',
+ 'time_visitante': 'América - MG'
  }
 
  INSTRUÇÕES
