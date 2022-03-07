@@ -8,6 +8,7 @@ O objetivo inicial não é informações de placar e, sim, para controlar qualqu
 Spiders:
 cbf_games - Pega informações de campeonatos presentes no site da Confederação Brasileira de Futebol (CBF).
 fpf_games - Pega informações de campeonatos presentes no site da Federação Paulista de Futebol (FPF).
+flashscore_games - Pega informações de campeonatos presentes no site Flashscore (antigo resultados.com).
 
 
 Exemplo de resultado de um spider:
@@ -29,7 +30,7 @@ Exemplo de resultado de um spider:
  
  O projeto foi criado no Python 3.9.6 e necessita do Scrapy e do Selenium
 
- O Selenium é usado apenas no fpf_games para lidar com conteúdo gerado por JavaScript
+ O Selenium é usado no fpf_games e flashscore_games para lidar com conteúdo gerado por JavaScript
 
  Para instalação, basta digitar o comando "pip install -r requirements.txt
 

@@ -10,6 +10,8 @@ from selenium.webdriver import Chrome, ChromeOptions
 from soccer_games.items import SoccerGamesItem
 
 def obter_fase_jogo(numero_jogo, nome_campeonato):
+    # Obtém a fase a qual o jogo pertence de acordo com o número do jogo.
+
     fases = []
     if 'Campeonato Paulista - Série A1' in nome_campeonato:
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']

@@ -32,7 +32,8 @@ def obter_data_hora(data_hora):
     data = f'{data[0]}-{data[1]}-{ano}'
     return data, hora, jogo_adiado
 
-
+# Configuração do campeonato de acordo com o site Flashscore: 
+# {'país do campeonato': [nome do campeonato no flashscore, nome do campeonato desejado - série do campeonato desejado]}
 campeonatos = [
     {'alemanha': ['bundesliga', 'Campeonato Alemão - Campeonato Alemão -']},
     {'argentina': ['liga-profissional', 'Campeonato Argentino - Única']},
@@ -47,11 +48,6 @@ campeonatos = [
         ]
     },
 ]
-
-campeonatos = [
-    {'inglaterra': ['campeonato-ingles', 'Campeonato Inglês - Única']}
-]
-
 
 links = []
 nomes_campeonatos = []

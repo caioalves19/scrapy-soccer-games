@@ -10,11 +10,13 @@ from scrapy import Field, Item
 
 
 def tratar_time(time):
+    # Tratar nomes dos times para a forma necessária ao projeto
+    # Os ajustes estão organizados no arquivo tratar_nomes_times.json
+
     time = time.split(' - ')
     if 'a definir' in time[0].lower():
         return 'Selecione um clube'
-    # Tratar nomes para ficar de acordo com o projeto
-    # Corrigir acentuação
+    
     with open('tratar_nomes_times.json', 'r') as f:
         nomes_times = json.load(f)
 
@@ -31,7 +33,9 @@ def tratar_time(time):
 
 
 def tratar_cidade(cidade):
-    # Corrigir erros gramaticais
+    # Tratar nomes dos times para a forma necessária ao projeto
+    # Os ajustes estão organizados no arquivo tratar_nomes_cidades.json
+
     with open('tratar_nomes_cidades.json', 'r') as f:
         nomes_cidades = json.load(f)
 
@@ -42,8 +46,9 @@ def tratar_cidade(cidade):
 
 
 def tratar_estadio(estadio):
-    # Tratar nomes para ficar de acordo com o projeto
-    # Corrigir erros gramaticais
+    # Tratar nomes dos times para a forma necessária ao projeto
+    # Os ajustes estão organizados no arquivo tratar_nomes_estadios.json
+
     estadio = estadio.replace('Estádio ', '')
     estadio = estadio.replace('Estadio ', '')
     estadio = estadio.replace('Municipal ', '')
