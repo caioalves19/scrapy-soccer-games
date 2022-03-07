@@ -146,6 +146,8 @@ class CbfGamesSpider(scrapy.Spider):
         hora_jogo = tratar_hora(response.css('.col-xs-6 .text-6::text').get())
         jogo.add_value('hora_jogo', hora_jogo)
 
+        jogo.add_value('jogo_adiado', False)
+
         numero_jogo = int(response.url.split('/')[-1].split('?')[0])
         jogo.add_value('numero_jogo', numero_jogo)
 

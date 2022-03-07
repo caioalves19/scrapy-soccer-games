@@ -9,8 +9,21 @@ from selenium.webdriver import Chrome, ChromeOptions
 
 from soccer_games.items import SoccerGamesItem
 
-# from cbf_games import obter_fase_jogo
+def obter_fase_jogo(numero_jogo, nome_campeonato):
+    fases = []
+    if 'Campeonato Paulista - Série A1' in nome_campeonato:
+        fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
+        numero_fases = [96, 104, 108, 110]
+    
+    elif 'Campeonato Paulista - Série A2' in nome_campeonato or 'Campeonato Paulista - Série A3' in nome_campeonato:
+        fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
+        numero_fases = [120, 128, 132, 134]
 
+    for i in range(len(fases)):
+        if numero_jogo <= numero_fases[i]:
+            return fases[i]
+
+    return 'Única'
 
 def tratar_locais(locais):
     for i in range(len(locais)):
@@ -78,7 +91,7 @@ class FpfGamesSpider(scrapy.Spider):
             opcoes_campeonatos.click()
             sleep(2)
             # for i in range(campeonato['numero_rodadas']):
-            for i in range(2):
+            for i in range(1):
                 self.nomes_campeonatos.append(
                     campeonato['nome_campeonato_correto']
                 )
@@ -93,7 +106,7 @@ class FpfGamesSpider(scrapy.Spider):
                 )
                 rodadas = rodadas[-campeonato['numero_rodadas'] : :]
 
-                rodadas[i].click()
+                rodadas[i+11].click()
                 sleep(2)
 
                 btn_impressao = driver.find_element_by_css_selector(
@@ -154,15 +167,17 @@ class FpfGamesSpider(scrapy.Spider):
                 jogo.add_value('estado_jogo', 'SP')
                 jogo.add_value('data_jogo', datas[i].replace('/', '-'))
                 jogo.add_value('hora_jogo', horarios[i].replace('h', ':'))
+
+                jogo.add_value('jogo_adiado', False)
                 
-                # numeros_jogos = resp.css('.jogo::text').getall()
-                # numeros_jogos.pop(0)
-                # for numero in numeros_jogos:
-                #     numero = int(numero.strip()[-2::])
-                # numero_jogo = numeros_jogos[i]
-                # jogo.add_value('numero_jogo', numeros_jogos[i])
+                numeros_jogos = resp.css('.jogo::text').getall()
+                numeros_jogos.pop(0)
+                for n in range(len(numeros_jogos)):
+                    numeros_jogos[n] = int(numeros_jogos[n].strip()[-2::])
+                numero_jogo = numeros_jogos[i]
+                jogo.add_value('numero_jogo', numeros_jogos[i])
                 
                 jogo.add_value('rodada_jogo', rodada)
-                # jogo.add_value('fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato))
+                jogo.add_value('fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato))
 
                 yield jogo.load_item()
