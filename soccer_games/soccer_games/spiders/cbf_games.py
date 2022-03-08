@@ -95,8 +95,15 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
 
 
 # Links com todos os campeonatos necessários para scraping da CBF
-with open('D:\Caio\Projetos-Python\scrapy-soccer-games\soccer_games\links_cbf.json', 'r') as f:
-    links_cbf = json.load(f)
+links_cbf = [
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a/2022",
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-b/2022",
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-c/2022",
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-d/2022",
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/copa-nordeste-masculino/2022",
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/copa-brasil-masculino/2022",
+    "https://www.cbf.com.br/futebol-brasileiro/competicoes/campeonato-brasileiro-feminino-a1/2022"
+]
 
 
 class CbfGamesSpider(scrapy.Spider):
