@@ -25,7 +25,7 @@ def rodada_jogo(nome_campeonato, numero_jogo):
     campeonatos = {
         'Copa do Nordeste - Única': [8, 0],
         'Campeonato Brasileiro - Série D': [32, 0],
-        'Copa do Brasil - Única': [40, 0],
+        'Copa do Brasil - Copa do Brasil -': [40, 20],
         'Campeonato Brasileiro Feminino - A1': [8, 0],
     }
 
@@ -59,7 +59,7 @@ def obter_nome_campeonato(response):
         'campeonato-brasileiro-serie-c': 'Campeonato Brasileiro - Série C',
         'campeonato-brasileiro-serie-d': 'Campeonato Brasileiro - Série D',
         'copa-nordeste-masculino': 'Copa do Nordeste - Única',
-        'copa-brasil-masculino': 'Copa do Brasil - Única',
+        'copa-brasil-masculino': 'Copa do Brasil - Copa do Brasil -',
         'campeonato-brasileiro-feminino-a1': 'Campeonato Brasileiro Feminino - A1',
     }
     return campeonatos.get(link_nome)
@@ -102,7 +102,7 @@ with open('D:\Caio\Projetos-Python\scrapy-soccer-games\soccer_games\links_cbf.js
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = links_cbf
+    start_urls = [links_cbf[-2]]
 
     f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\cbf_games.json', 'w').close()
 

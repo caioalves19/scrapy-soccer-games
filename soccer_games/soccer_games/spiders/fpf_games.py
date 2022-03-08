@@ -64,20 +64,10 @@ class FpfGamesSpider(scrapy.Spider):
 
         campeonatos = [
             {
-                'nome_campeonato_fpf': 'Paulistão Sicredi',
-                'nome_campeonato_correto': 'Campeonato Paulista - Série A1',
-                'numero_rodadas': 12,
-            },
-            {
                 'nome_campeonato_fpf': 'Paulistão A2',
                 'nome_campeonato_correto': 'Campeonato Paulista - Série A2',
                 'numero_rodadas': 15,
-            },
-            {
-                'nome_campeonato_fpf': 'Paulistão A3',
-                'nome_campeonato_correto': 'Campeonato Paulista - Série A3',
-                'numero_rodadas': 15,
-            },
+            }
         ]
         self.html_lista = []
         self.nomes_campeonatos = []
@@ -92,8 +82,8 @@ class FpfGamesSpider(scrapy.Spider):
             )
             opcoes_campeonatos.click()
             sleep(2)
-            # for i in range(campeonato['numero_rodadas']):
-            for i in range(1):
+            for i in range(campeonato['numero_rodadas']):
+            # for i in range(1):
                 self.nomes_campeonatos.append(
                     campeonato['nome_campeonato_correto']
                 )
@@ -108,7 +98,7 @@ class FpfGamesSpider(scrapy.Spider):
                 )
                 rodadas = rodadas[-campeonato['numero_rodadas'] : :]
 
-                rodadas[i+11].click()
+                rodadas[i].click()
                 sleep(2)
 
                 btn_impressao = driver.find_element_by_css_selector(
