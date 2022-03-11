@@ -25,7 +25,7 @@ def rodada_jogo(nome_campeonato, numero_jogo):
     campeonatos = {
         'Copa do Nordeste - Única': [8, 0],
         'Campeonato Brasileiro - Série D': [32, 0],
-        'Copa do Brasil - Copa do Brasil -': [40, 20],
+        'Copa do Brasil - Copa do Brasil -': [20, 40],
         'Campeonato Brasileiro Feminino - A1': [8, 0],
     }
 
