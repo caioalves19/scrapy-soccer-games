@@ -48,6 +48,9 @@ campeonatos = [
         ]
     },
 ]
+campeonatos = [
+    {'inglaterra': ['campeonato-ingles', 'Campeonato Inglês - Única']}
+]
 
 links = []
 nomes_campeonatos = []

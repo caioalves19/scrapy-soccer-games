@@ -31,7 +31,7 @@ def rodada_jogo(nome_campeonato, numero_jogo):
 
     quantidade_jogos_rodada = campeonatos.get(nome_campeonato, [10,0])[0]
 
-    contagem_jogos_inicial = campeonatos.get(nome_campeonato)[1]
+    contagem_jogos_inicial = campeonatos.get(nome_campeonato, [10, 0])[1]
 
     rodada = (numero_jogo - contagem_jogos_inicial) // quantidade_jogos_rodada
 
@@ -79,6 +79,10 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
         ]
         numero_fases = [40, 60, 92, 108, 116, 120, 122]
 
+    elif 'Série C' in nome_campeonato:
+        fases = ['Primeira Fase']
+        numero_fases = [180]
+    
     elif 'Feminino - A1' in nome_campeonato:
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
         numero_fases = [120, 128, 132, 134]
@@ -109,7 +113,7 @@ links_cbf = [
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = [links_cbf[-2]]
+    start_urls = links_cbf[0:3]
 
     f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\cbf_games.json', 'w').close()
 
@@ -119,9 +123,11 @@ class CbfGamesSpider(scrapy.Spider):
 
         for link in links:
             # Ajusta o link para aversão amp, página mais organizada para pegar as informações
-            link = link.split('br/')
-            link = link[0] + 'br/amp/' + link[1]
-            yield scrapy.Request(link, callback=self.parse_jogos)
+            link_num = int(link.split('?')[0].split('/')[-1])
+            if link_num <=50:
+                link = link.split('br/')
+                link = link[0] + 'br/amp/' + link[1]
+                yield scrapy.Request(link, callback=self.parse_jogos)
 
     def parse_jogos(self, response):
         jogo = ItemLoader(item=SoccerGamesItem(), response=response)
