@@ -31,7 +31,7 @@ def rodada_jogo(nome_campeonato, numero_jogo):
 
     quantidade_jogos_rodada = campeonatos.get(nome_campeonato, [10,0])[0]
 
-    contagem_jogos_inicial = campeonatos.get(nome_campeonato)[1]
+    contagem_jogos_inicial = campeonatos.get(nome_campeonato, [10,0])[1]
 
     rodada = (numero_jogo - contagem_jogos_inicial) // quantidade_jogos_rodada
 
