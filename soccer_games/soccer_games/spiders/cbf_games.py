@@ -23,7 +23,7 @@ def tratar_data(data):
 def rodada_jogo(nome_campeonato, numero_jogo):
     # Usa o número do jogo para descobrir de qual rodada é. O quantidade_jogos_rodada é quantidade de jogos por rodada do campeonato.
     campeonatos = {
-        'Copa do Nordeste - Única': [8, 0],
+        'Copa do Nordeste - Copa do Nordeste -': [8, 0],
         'Campeonato Brasileiro - Série D': [32, 0],
         'Copa do Brasil - Copa do Brasil -': [20, 40],
         'Campeonato Brasileiro Feminino - A1': [8, 0],
@@ -58,7 +58,7 @@ def obter_nome_campeonato(response):
         'campeonato-brasileiro-serie-b': 'Campeonato Brasileiro - Série B',
         'campeonato-brasileiro-serie-c': 'Campeonato Brasileiro - Série C',
         'campeonato-brasileiro-serie-d': 'Campeonato Brasileiro - Série D',
-        'copa-nordeste-masculino': 'Copa do Nordeste - Única',
+        'copa-nordeste-masculino': 'Copa do Nordeste - Copa do Nordeste -',
         'copa-brasil-masculino': 'Copa do Brasil - Copa do Brasil -',
         'campeonato-brasileiro-feminino-a1': 'Campeonato Brasileiro Feminino - A1',
     }
@@ -79,6 +79,10 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
         ]
         numero_fases = [40, 60, 92, 108, 116, 120, 122]
 
+    elif 'Série C' in nome_campeonato:
+        fases = ['Primeira Fase', 'Segunda Fase', 'Final']
+        numero_fases = [190, 214, 216]  
+    
     elif 'Feminino - A1' in nome_campeonato:
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
         numero_fases = [120, 128, 132, 134]
@@ -86,6 +90,14 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
     elif 'Campeonato Paulista - Série A1' in nome_campeonato:
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
         numero_fases = [96, 104, 108, 110]
+    
+    elif 'Série D' in nome_campeonato:
+        fases = ['Fase de Grupos', 'Segunda Fase', 'Oitavas de Final', 'Quartas de Final', 'Semifinais', 'Final']
+        numero_fases = [448, 480, 496, 504, 508, 510]
+    
+    elif 'Copa do Nordeste' in nome_campeonato:
+        fases = ['Fase de Grupos', 'Quartas de Final', 'Semifinais', 'Final']
+        numero_fases = [64, 68, 70, 72]
 
     for i in range(len(fases)):
         if numero_jogo <= numero_fases[i]:
@@ -109,19 +121,21 @@ links_cbf = [
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
-    start_urls = [links_cbf[-2]]
+    start_urls = [links_cbf[2]]
 
-    f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\cbf_games.json', 'w').close()
 
     def parse(self, response):
+        f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\cbf_games.json', 'w').close()
         # Entra na página inicial de cada campeonato e obtém links de jogos que ainda não aconteceram
         links = response.css('.btn-info::attr(href)').getall()
 
         for link in links:
             # Ajusta o link para aversão amp, página mais organizada para pegar as informações
-            link = link.split('br/')
-            link = link[0] + 'br/amp/' + link[1]
-            yield scrapy.Request(link, callback=self.parse_jogos)
+            link_num = int(link.split('?')[0].split('/')[-1])
+            if link_num > 50:
+                link = link.split('br/')
+                link = link[0] + 'br/amp/' + link[1]
+                yield scrapy.Request(link, callback=self.parse_jogos)
 
     def parse_jogos(self, response):
         jogo = ItemLoader(item=SoccerGamesItem(), response=response)

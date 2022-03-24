@@ -34,20 +34,22 @@ def obter_data_hora(data_hora):
 
 # Configuração do campeonato de acordo com o site Flashscore: 
 # {'país do campeonato': [nome do campeonato no flashscore, nome do campeonato desejado - série do campeonato desejado]}
-campeonatos = [
-    {'alemanha': ['bundesliga', 'Campeonato Alemão - Campeonato Alemão -']},
-    {'argentina': ['liga-profissional', 'Campeonato Argentino - Única']},
-    {'espanha': ['laliga', 'Campeonato Espanhol - Campeonato Espanhol -']},
-    {'franca': ['ligue-1', 'Campeonato Francês - Campeonato Francês -']},
-    {'inglaterra': ['campeonato-ingles', 'Campeonato Inglês - Única']},
-    {'italia': ['serie-a', 'Campeonato Italiano - Campeonato Italiano -']},
-    {
-        'portugal': [
-            'liga-portugal',
-            'Campeonato Português - Campeonato Português -',
-        ]
-    },
-]
+# campeonatos = [
+#     {'alemanha': ['bundesliga', 'Campeonato Alemão - Campeonato Alemão -']},
+#     {'argentina': ['liga-profissional', 'Campeonato Argentino - Única']},
+#     {'espanha': ['laliga', 'Campeonato Espanhol - Campeonato Espanhol -']},
+#     {'franca': ['ligue-1', 'Campeonato Francês - Campeonato Francês -']},
+#     {'inglaterra': ['campeonato-ingles', 'Campeonato Inglês - Única']},
+#     {'italia': ['serie-a', 'Campeonato Italiano - Campeonato Italiano -']},
+#     {
+#         'portugal': [
+#             'liga-portugal',
+#             'Campeonato Português - Campeonato Português -',
+#         ]
+#     },
+# ]
+
+campeonatos = [{'portugal': ['liga-portugal', 'Campeonato Português - Campeonato Português -']}]
 
 links = []
 nomes_campeonatos = []
@@ -69,8 +71,8 @@ class FlashscoresGamesSpider(scrapy.Spider):
     name = 'flashscores_games'
     allowed_domains = ['www.flashscore.com.br']
     start_urls = ['https://www.flashscore.com.br']
-    f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\flashscore_games.json', 'w').close()
     def __init__(self):
+        f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\flashscore_games.json', 'w').close()
         self.html_lista = []
         for link in links:
             driver.get(link)

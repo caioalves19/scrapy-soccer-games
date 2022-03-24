@@ -54,9 +54,9 @@ class FpfGamesSpider(scrapy.Spider):
         'https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1'
     ]
 
-    f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\fpf_games.json', 'w').close()
 
     def __init__(self):
+        f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\fpf_games.json', 'w').close()
         driver.get('https://futebolpaulista.com.br/Competicoes')
         sleep(2)
         btn_aceitar = driver.find_element_by_css_selector('.js-aceitar')
