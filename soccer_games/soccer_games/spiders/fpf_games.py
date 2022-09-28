@@ -9,6 +9,7 @@ from selenium.webdriver import Chrome, ChromeOptions
 
 from soccer_games.items import SoccerGamesItem
 
+
 def obter_fase_jogo(numero_jogo, nome_campeonato):
     # Obtém a fase a qual o jogo pertence de acordo com o número do jogo.
 
@@ -16,10 +17,34 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
     if 'Campeonato Paulista - Série A1' in nome_campeonato:
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
         numero_fases = [96, 104, 108, 110]
-    
-    elif 'Campeonato Paulista - Série A2' in nome_campeonato or 'Campeonato Paulista - Série A3' in nome_campeonato:
+
+    elif 'Campeonato Paulista - Série A2' in nome_campeonato:
         fases = ['Primeira Fase', 'Quartas de Final', 'Semifinais', 'Final']
         numero_fases = [120, 128, 132, 134]
+
+    elif 'Campeonato Paulista - Série A3' in nome_campeonato:
+        fases = ['Primeira Fase', 'Segunda fase']
+        numero_fases = [120, 144]
+
+    elif 'Campeonato Paulista - 2ª Divisão' in nome_campeonato:
+        fases = ['Primeira Fase', 'Segunda Fase', 'Quartas de Final', 'Semifinais']
+        numero_fases = [180, 228, 236, 240]
+
+    elif 'Copa Paulista - Única' in nome_campeonato:
+        fases = ['Fase de Grupos', 'Segunda Fase']
+        numero_fases = [80, 228]
+
+    elif 'Paulista Sub-15' in nome_campeonato or 'Paulista Sub-17' in nome_campeonato:
+        fases = ['Primeira Fase', 'Segunda Fase', 'Terceira Fase']
+        numero_fases = [320, 416, 464]
+
+    elif 'Paulista Sub-20' in nome_campeonato:
+        fases = ['Fase de Grupos', 'Segunda Fase', 'Terceira Fase']
+        numero_fases = [360, 456, 504]
+    
+    elif 'Paulista Feminino' in nome_campeonato:
+        fases = ['Primeira Fase']
+        numero_fases = [66]
 
     for i in range(len(fases)):
         if numero_jogo <= numero_fases[i]:
@@ -27,13 +52,19 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
 
     return 'Única'
 
+
 def tratar_locais(locais):
+    for local in locais:
+        if 'Paulistão Play' in local or 'Eleven' in local:
+            locais.remove(local)
+
     for i in range(len(locais)):
         locais[i] = locais[i].strip()
+
     locais = [value for value in locais if value != '']
     estadios = []
     cidades = []
-    for i in range(0, len(locais), 3):
+    for i in range(0, len(locais), 2):
         estadios.append(locais[i])
         cidades.append(locais[i + 1])
     return estadios, cidades
@@ -51,23 +82,63 @@ class FpfGamesSpider(scrapy.Spider):
     name = 'fpf_games'
     allowed_domains = ['futebolpaulista.com.br']
     start_urls = [
-        'https://futebolpaulista.com.br/Competicoes/Tabela.aspx?idCampeonato=76&ano=2022&nav=1'
+        'https://futebolpaulista.com.br/Competicoes/Tabela.aspx'
     ]
 
-
     def __init__(self):
-        f = open('D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\fpf_games.json', 'w').close()
+        f = open(
+            'D:\Caio\Projetos-Python\scrapy-soccer-games\\futebol_interior\\fpf_games.json', 'w').close()
         driver.get('https://futebolpaulista.com.br/Competicoes')
         sleep(2)
         btn_aceitar = driver.find_element_by_css_selector('.js-aceitar')
         btn_aceitar.click()
 
         campeonatos = [
+            # {
+            #     'nome_campeonato_fpf': 'Paulistão A3',
+            #     'nome_campeonato_correto': 'Campeonato Paulista - Série A3',
+            #     'numero_rodadas': 21,
+            # },
+            # {
+            #     'nome_campeonato_fpf': 'Paulista Sub-23 2ª Divisão',
+            #     'nome_campeonato_correto': 'Campeonato Paulista - 2ª Divisão',
+            #     'numero_rodadas': 2,
+            # },
+            # {
+            #     'nome_campeonato_fpf': 'Copa Paulista',
+            #     'nome_campeonato_correto': 'Copa Paulista - Única',
+            #     'numero_rodadas': 10,
+            # },
             {
-                'nome_campeonato_fpf': 'Paulistão A2',
-                'nome_campeonato_correto': 'Campeonato Paulista - Série A2',
-                'numero_rodadas': 15,
-            }
+                'nome_campeonato_fpf': 'Paulista Sub-15',
+                'nome_campeonato_correto': 'Paulista Sub-15 - Única',
+                'numero_rodadas': 2,
+            },
+            # {
+            #     'nome_campeonato_fpf': 'Paulista Sub-17',
+            #     'nome_campeonato_correto': 'Paulista Sub-17 - Única',
+            #     'numero_rodadas': 6,
+            # },
+            # {
+            #     'nome_campeonato_fpf': 'Feminino Sub-17',
+            #     'nome_campeonato_correto': 'Paulista Sub-17 Feminino - Única',
+            #     'numero_rodadas': 10,
+            # },
+            # {
+            #     'nome_campeonato_fpf': 'Paulista - SUB20',
+            #     'nome_campeonato_correto': 'Paulista Sub-20 - 1ª Divisão',
+            #     'numero_rodadas': 6,
+            # },
+            # {
+            #     'nome_campeonato_fpf': 'Feminino Sub-15',
+            #     'nome_campeonato_correto': 'Paulista Sub-15 Feminino - Única',
+            #     'numero_rodadas': 6,
+            # },
+            # {
+            #     'nome_campeonato_fpf': 'Paulistão Feminino',
+            #     'nome_campeonato_correto': 'Paulista Feminino - Única',
+            #     'numero_rodadas': 11,
+            # },
         ]
         self.html_lista = []
         self.nomes_campeonatos = []
@@ -83,7 +154,7 @@ class FpfGamesSpider(scrapy.Spider):
             opcoes_campeonatos.click()
             sleep(2)
             for i in range(campeonato['numero_rodadas']):
-            # for i in range(1):
+                # for i in range(1):
                 self.nomes_campeonatos.append(
                     campeonato['nome_campeonato_correto']
                 )
@@ -96,7 +167,7 @@ class FpfGamesSpider(scrapy.Spider):
                 rodadas = driver.find_elements_by_css_selector(
                     '#combo-rodadas a'
                 )
-                rodadas = rodadas[-campeonato['numero_rodadas'] : :]
+                rodadas = rodadas[-campeonato['numero_rodadas']::]
 
                 rodadas[i].click()
                 sleep(2)
@@ -116,6 +187,11 @@ class FpfGamesSpider(scrapy.Spider):
         driver.close()
 
     def parse(self, response):
+        def ajuste_rodada(nome_campeonato):
+            if nome_campeonato == 'Paulista Sub-15 - Única':
+                return 22
+            return 0
+
         for i in range(len(self.html_lista)):
             resp = Selector(text=self.html_lista[i])
 
@@ -134,42 +210,43 @@ class FpfGamesSpider(scrapy.Spider):
             locais = tratar_locais(locais)
 
             nome_campeonato = self.nomes_campeonatos[i]
-            print(nome_campeonato)
 
             for i in range(len(times_mandantes)):
                 data_jogo = datas[i].split('/')
                 data_jogo = date(
                     int(data_jogo[2]), int(data_jogo[1]), int(data_jogo[0])
                 )
-                if data_jogo < data_hoje:
+                if data_jogo < data_hoje or 'FOLGA POR DESISTÊNCIA' in times_mandantes[i].upper() or 'FOLGA POR DESISTÊNCIA' in times_visitantes[i].upper():
                     continue
-                
+
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
-                
+
                 jogo.add_value('nome_campeonato', nome_campeonato)
-                
+
                 jogo.add_value(
                     'time_mandante', times_mandantes[i].strip() + ' - SP'
                 )
                 jogo.add_value(
                     'time_visitante', times_visitantes[i].strip() + ' - SP'
                 )
-                jogo.add_value('estadio_jogo', locais[0][i])
+                jogo.add_value('estadio_jogo', locais[0][i].strip())
                 jogo.add_value('cidade_jogo', locais[1][i])
                 jogo.add_value('estado_jogo', 'SP')
                 jogo.add_value('data_jogo', datas[i].replace('/', '-'))
                 jogo.add_value('hora_jogo', horarios[i].replace('h', ':'))
 
                 jogo.add_value('jogo_adiado', False)
-                
+
                 numeros_jogos = resp.css('.jogo::text').getall()
                 numeros_jogos.pop(0)
                 for n in range(len(numeros_jogos)):
-                    numeros_jogos[n] = int(numeros_jogos[n].strip()[-2::])
+                    numeros_jogos[n] = int(
+                        numeros_jogos[n].split('nº')[1].strip())
                 numero_jogo = numeros_jogos[i]
                 jogo.add_value('numero_jogo', numeros_jogos[i])
-                
-                jogo.add_value('rodada_jogo', rodada)
-                jogo.add_value('fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato))
+
+                jogo.add_value('rodada_jogo', rodada - ajuste_rodada(nome_campeonato))
+                jogo.add_value('fase_jogo', obter_fase_jogo(
+                    numero_jogo, nome_campeonato))
 
                 yield jogo.load_item()
