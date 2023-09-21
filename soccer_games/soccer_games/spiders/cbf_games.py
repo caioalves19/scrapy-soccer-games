@@ -22,52 +22,57 @@ class CbfGamesSpider(scrapy.Spider):
             if link_num > 0:
                 link = link.split('br/')
                 link = link[0] + 'br/amp/' + link[1]
-                yield scrapy.Request(link, callback=self.parse_jogos)
+            yield scrapy.Request(link, callback=self.parse_jogos)
 
     def parse_jogos(self, response):
         data_jogo = tratar_data(response.css('.col-xs-6 span::text').get())
 
-        if data_jogo != '00-00-0000':
+        jogo = ItemLoader(item=SoccerGamesItem(), response=response)
 
-            jogo = ItemLoader(item=SoccerGamesItem(), response=response)
+        nome_campeonato = obter_nome_campeonato(response)
+        
+        id_campeonato = obter_id_campeonato(nome_campeonato)
+        
+        jogo.add_value('nome_campeonato', nome_campeonato)
+        jogo.add_value('id_campeonato', id_campeonato)
 
-            nome_campeonato = obter_nome_campeonato(response)
-            jogo.add_value('nome_campeonato', nome_campeonato)
+        jogo.add_css(
+            'time_mandante', '.jogo-equipe-nome-completo::text', lambda v: v[0]
+        )
 
-            jogo.add_css(
-                'time_mandante', '.jogo-equipe-nome-completo::text', lambda v: v[0]
-            )
+        jogo.add_css(
+            'time_visitante',
+            '.jogo-equipe-nome-completo::text',
+            lambda v: v[1],
+        )
 
-            jogo.add_css(
-                'time_visitante',
-                '.jogo-equipe-nome-completo::text',
-                lambda v: v[1],
-            )
+        local_jogo = obter_local(response)
+        jogo.add_value('estadio_jogo', local_jogo[0])
+        jogo.add_value('cidade_jogo', local_jogo[1])
+        jogo.add_value('estado_jogo', local_jogo[-1])
 
-            local_jogo = obter_local(response)
-            jogo.add_value('estadio_jogo', local_jogo[0])
-            jogo.add_value('cidade_jogo', local_jogo[1])
-            jogo.add_value('estado_jogo', local_jogo[-1])
+        numero_jogo = int(response.url.split('/')[-1].split('?')[0])
+        rodada_jogo = obter_rodada_jogo(nome_campeonato, numero_jogo)
 
-            jogo.add_value('data_jogo', data_jogo)
+        hora_jogo = tratar_hora(response.css(
+            '.col-xs-6 .text-6::text').get())
+        jogo.add_value('hora_jogo', hora_jogo)
 
-            hora_jogo = tratar_hora(response.css(
-                '.col-xs-6 .text-6::text').get())
-            jogo.add_value('hora_jogo', hora_jogo)
+        jogo.add_value('jogo_adiado', False)
 
-            jogo.add_value('jogo_adiado', False)
+        
 
-            numero_jogo = int(response.url.split('/')[-1].split('?')[0])
-            jogo.add_value('numero_jogo', numero_jogo)
+        jogo.add_value('data_jogo', data_jogo)
 
-            jogo.add_value(
-                'rodada_jogo', rodada_jogo(nome_campeonato, numero_jogo)
-            )
+        jogo.add_value('numero_jogo', numero_jogo)
 
-            jogo.add_value(
-                'fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato)
-            )
+        jogo.add_value(
+            'rodada_jogo', rodada_jogo
+        )
 
-            return jogo.load_item()
+        jogo.add_value(
+            'fase_jogo', obter_fase_jogo(numero_jogo, nome_campeonato)
+        )
 
 
+        return jogo.load_item()

@@ -8,8 +8,8 @@ from scrapy.loader import ItemLoader
 from scrapy.selector import Selector
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
-
 from soccer_games.items import SoccerGamesItem
+from soccer_games.modulos.modulos import obter_id_campeonato
 
 
 def nome_time_libertadores(nome_time):
@@ -36,9 +36,9 @@ def obter_data_hora(data_hora):
     data.remove('')
 
     if int(data[1]) < 7:
-        ano = 2022
+        ano = 2024
     else:
-        ano = 2021
+        ano = 2023
 
     data = f'{data[0]}-{data[1]}-{ano}'
     return data, hora, jogo_adiado
@@ -46,23 +46,20 @@ def obter_data_hora(data_hora):
 # Configuração do campeonato de acordo com o site Flashscore:
 # {'país do campeonato': [nome do campeonato no flashscore, nome do campeonato desejado - série do campeonato desejado]}
 campeonatos = [
-    # {'alemanha': ['bundesliga', 'Campeonato Alemão - Campeonato Alemão -']},
-    {'espanha': ['laliga', 'Campeonato Espanhol - Campeonato Espanhol -']},
-    # {'franca': ['ligue-1', 'Campeonato Francês - Campeonato Francês -']},
-    # {'inglaterra': ['campeonato-ingles', 'Campeonato Inglês - Única']},
-    # {'italia': ['serie-a', 'Campeonato Italiano - Campeonato Italiano -']},
+    # {'alemanha': ['bundesliga', 'Alemão - Alemão -']},
+    # {'espanha': ['laliga', 'Espanhol - Espanhol -']},
+    # {'franca': ['ligue-1', 'Francês - Francês -']},
+    # {'inglaterra': ['campeonato-ingles', 'Inglês - Inglês -']},
+    {'italia': ['serie-a', 'Italiano - Italiano -']},
     # {
     #     'portugal': [
     #         'liga-portugal',
-    #         'Campeonato Português - Campeonato Português -',
+    #         'Português - Português -',
     #     ]
     # },
+    # {'arabia-saudita': ['primeira-liga', 'Saudita - Única']},
 ]
 
-
-
-# campeonatos = [{'america-do-sul': ['copa-libertadores',
-#                                    'Libertadores da América - Libertadores da América -']}]
 
 # campeonatos = [{'america-do-sul': ['copa-sul-americana',
 #                                    'Copa Sul-Americana - Única']}]
@@ -78,7 +75,7 @@ for campeonato in campeonatos:
 
 options = ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-options.add_argument('--headless')
+# options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 driver = Chrome('c:\chromedriver.exe', options=options)
 driver.maximize_window()
@@ -163,14 +160,15 @@ class FlashscoresGamesSpider(scrapy.Spider):
             while c < len(todos_jogos):
                 jogo = ItemLoader(item=SoccerGamesItem(), selector=resp)
                 jogo.add_value('nome_campeonato', nome_campeonato)
-
+                jogo.add_value('id_campeonato', obter_id_campeonato(nome_campeonato))
+            
                 if 'RODADA' in todos_jogos[c].upper():
                     rodada = int(todos_jogos[c][-2::])
                     c = c + 1
                     continue
 
-                jogo.add_value('time_mandante', todos_jogos[c + 1])
-                jogo.add_value('time_visitante', todos_jogos[c + 2])
+                jogo.add_value('time_mandante', f"{todos_jogos[c + 1]}")
+                jogo.add_value('time_visitante', f"{todos_jogos[c + 2]}")
 
                 jogo.add_value('estadio_jogo', ' ')
                 jogo.add_value('cidade_jogo', ' ')
