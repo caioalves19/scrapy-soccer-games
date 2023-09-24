@@ -4,6 +4,7 @@ from scrapy.loader import ItemLoader
 from soccer_games.items import SoccerGamesItem
 from soccer_games.modulos.modulos import *
 
+
 class CbfGamesSpider(scrapy.Spider):
     name = 'cbf_games'
     allowed_domains = ['cbf.com.br']
