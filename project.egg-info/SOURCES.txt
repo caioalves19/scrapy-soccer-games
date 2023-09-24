@@ -1,0 +1,14 @@
+setup.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt
+soccer_games/__init__.py
+soccer_games/items.py
+soccer_games/middlewares.py
+soccer_games/pipelines.py
+soccer_games/settings.py
+soccer_games/spiders/__init__.py
+soccer_games/spiders/cbf_games.py
+soccer_games/spiders/fpf_games.py
