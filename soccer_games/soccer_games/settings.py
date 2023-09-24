@@ -14,7 +14,7 @@ NEWSPIDER_MODULE = 'soccer_games.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+# USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows; Windows NT 6.0; WOW64 Trident/5.0)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -93,3 +93,12 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 
+## settings.py
+
+SCRAPEOPS_API_KEY = '05810a7a-e61f-4ae2-b2f7-d43c985583ca'
+SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
+SCRAPEOPS_NUM_RESULTS = 5
+
+DOWNLOADER_MIDDLEWARES = {
+    'soccer_games.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400,
+}
