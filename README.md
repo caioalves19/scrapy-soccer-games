@@ -10,7 +10,7 @@ cbf_games - Pega informações de campeonatos presentes no site da Confederaçã
 fpf_games - Pega informações de campeonatos presentes no site da Federação Paulista de Futebol (FPF)*
 flashscore_games - Pega informações de campeonatos presentes no site Flashscore (antigo resultados.com).
 
-*O fpf_games não está funcionando com o Scrapy e Selinium em conjunto. Apenas consigo pegar os dados com outro script, usando apenas o Selenium
+*O fpf_games não está funcionando com o Scrapy e Selinium em conjunto. Apenas consigo pegar os dados com outro script, usando apenas o Selenium. 
 
 
 Exemplo de resultado de um spider:
