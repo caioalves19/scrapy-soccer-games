@@ -95,10 +95,10 @@ ITEM_PIPELINES = {
 
 ## settings.py
 
-SCRAPEOPS_API_KEY = '05810a7a-e61f-4ae2-b2f7-d43c985583ca'
-SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
-SCRAPEOPS_NUM_RESULTS = 5
+# SCRAPEOPS_API_KEY = '05810a7a-e61f-4ae2-b2f7-d43c985583ca'
+# SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
+# SCRAPEOPS_NUM_RESULTS = 5
 
-DOWNLOADER_MIDDLEWARES = {
-    'soccer_games.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#     'soccer_games.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400,
+# }

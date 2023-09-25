@@ -46,18 +46,18 @@ def obter_data_hora(data_hora):
 # Configuração do campeonato de acordo com o site Flashscore:
 # {'país do campeonato': [nome do campeonato no flashscore, nome do campeonato desejado - série do campeonato desejado]}
 campeonatos = [
-    # {'alemanha': ['bundesliga', 'Alemão - Alemão -']},
-    # {'espanha': ['laliga', 'Espanhol - Espanhol -']},
-    # {'franca': ['ligue-1', 'Francês - Francês -']},
-    # {'inglaterra': ['campeonato-ingles', 'Inglês - Inglês -']},
+    {'alemanha': ['bundesliga', 'Alemão - Alemão -']},
+    {'espanha': ['laliga', 'Espanhol - Espanhol -']},
+    {'franca': ['ligue-1', 'Francês - Francês -']},
+    {'inglaterra': ['campeonato-ingles', 'Inglês - Inglês -']},
     {'italia': ['serie-a', 'Italiano - Italiano -']},
-    # {
-    #     'portugal': [
-    #         'liga-portugal',
-    #         'Português - Português -',
-    #     ]
-    # },
-    # {'arabia-saudita': ['primeira-liga', 'Saudita - Única']},
+    {
+        'portugal': [
+            'liga-portugal',
+            'Português - Português -',
+        ]
+    },
+    {'arabia-saudita': ['primeira-liga', 'Saudita - Única']},
 ]
 
 

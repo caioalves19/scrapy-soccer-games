@@ -81,7 +81,6 @@ def tratar_locais(locais):
 
 data_hoje = date.today()
 options = ChromeOptions()
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
 # options.add_argument('--headless')
 driver = Chrome('C:\chromedriver.exe', options=options)
 driver.maximize_window()

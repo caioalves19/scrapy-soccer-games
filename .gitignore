@@ -156,3 +156,4 @@ teste.py
 soccer_games/scrapinghub.yml
 soccer_games/setup.py
 twisted.whl
+soccer_games/soccer_games/spiders/fpf_games.py
