@@ -56,7 +56,7 @@ def obter_rodada_jogo(nome_campeonato, numero_jogo):
         "Brasileirão Feminino - A3": [1, 60],
         "Brasileirão Feminino - Sub-20": [1, 108],
         "Copa do Brasil Sub-17 - Única": [10, 0],
-        "Copa do Brasil Sub-20 - Única": [4, 32],
+        "Copa do Brasil Sub-20 - Única": [2, 40],
         "Copa Verde - Única": [1, 29],
     }
 
