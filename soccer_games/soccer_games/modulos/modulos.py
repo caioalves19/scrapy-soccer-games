@@ -49,7 +49,7 @@ def obter_rodada_jogo(nome_campeonato, numero_jogo):
         "Brasileirão - Série C": [4, 190],
         "Brasileirão - Aspirantes": [2, 56],
         "Brasileirão - Sub-20": [1, 102],
-        "Brasileirão - Sub-17": [4, 90],
+        "Brasileirão - Sub-17": [2, 98],
         "Copa do Brasil - Copa do Brasil -": [1, 120],
         "Brasileirão Feminino - A1": [1, 132],
         "Brasileirão Feminino - A2": [1, 68],
