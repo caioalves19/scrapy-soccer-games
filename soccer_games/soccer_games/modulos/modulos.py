@@ -4,6 +4,7 @@ import json
 with open("soccer_games/data/ids_campeonatos.json", "r", encoding="utf-8") as f:
     ids_campeonatos = json.load(f)
 
+
 # Links com todos os campeonatos necessários para scraping da CBF
 def criar_link(link):
     return f"https://www.cbf.com.br/futebol-brasileiro/competicoes/{link}/"
@@ -19,6 +20,7 @@ br_aspirantes = criar_link("campeonato-brasileiro-aspirantes")
 fem_a1 = criar_link("campeonato-brasileiro-feminino-a1")
 fem_a2 = criar_link("campeonato-brasileiro-feminino-a2")
 fem_a3 = criar_link("campeonato-brasileiro-feminino-a3")
+fem_sub17 = criar_link("campeonato-brasileiro-feminino-sub17")
 fem_sub20 = criar_link("campeonato-brasileiro-feminino-sub20")
 copa_br = criar_link("copa-brasil-masculino")
 copa_br_sub17 = criar_link("copa-brasil-sub17")
@@ -27,16 +29,10 @@ copa_ne = criar_link("copa-nordeste-masculino")
 copa_verde = criar_link("copa-verde")
 
 links_cbf = [
-    copa_br,
     serie_a,
     serie_b,
-    serie_c,
-    serie_d,
-    br_sub17,
-    br_sub20,
-    copa_br_sub20,
+    fem_sub17
 ]
-# links_cbf = [serie_d]
 
 
 def obter_rodada_jogo(nome_campeonato, numero_jogo):
@@ -46,17 +42,18 @@ def obter_rodada_jogo(nome_campeonato, numero_jogo):
     campeonatos = {
         "Copa do Nordeste - Copa do Nordeste -": [1, 70],
         "Brasileirão - Série D": [1, 508],
-        "Brasileirão - Série C": [4, 190],
+        "Brasileirão - Série C": [1, 214],
         "Brasileirão - Aspirantes": [2, 56],
         "Brasileirão - Sub-20": [1, 102],
-        "Brasileirão - Sub-17": [2, 98],
+        "Brasileirão - Sub-17": [1, 102],
         "Copa do Brasil - Copa do Brasil -": [1, 120],
         "Brasileirão Feminino - A1": [1, 132],
         "Brasileirão Feminino - A2": [1, 68],
         "Brasileirão Feminino - A3": [1, 60],
+        "Brasileirão Feminino - Sub-17": [8, 0],
         "Brasileirão Feminino - Sub-20": [1, 108],
         "Copa do Brasil Sub-17 - Única": [10, 0],
-        "Copa do Brasil Sub-20 - Única": [2, 40],
+        "Copa do Brasil Sub-20 - Única": [1, 44],
         "Copa Verde - Única": [1, 29],
     }
 
@@ -86,6 +83,7 @@ def obter_nome_campeonato(response):
         "campeonato-brasileiro-feminino-a1": "Brasileirão Feminino - A1",
         "campeonato-brasileiro-feminino-a2": "Brasileirão Feminino - A2",
         "campeonato-brasileiro-feminino-a3": "Brasileirão Feminino - A3",
+        "campeonato-brasileiro-feminino-sub17": "Brasileirão Feminino - Sub-17",
         "campeonato-brasileiro-feminino-sub20": "Brasileirão Feminino - Sub-20",
         "copa-brasil-sub17": "Copa do Brasil Sub-17 - Única",
         "copa-brasil-sub20": "Copa do Brasil Sub-20 - Única",
@@ -153,7 +151,7 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
             "Semifinais",
             "Final",
         ]
-        numero_fases = [16, 32, 40, 44, 46]
+        numero_fases = [16, 32, 40, 44, 45]
 
     elif "Copa do Brasil" in nome_campeonato:
         fases = [
@@ -181,7 +179,7 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
 
     elif "Brasileirão - Sub-17" in nome_campeonato:
         fases = ["1ª Fase", "Quartas de Final", "Semifinais", "Final"]
-        numero_fases = [90, 98, 102, 104]
+        numero_fases = [90, 98, 102, 103]
 
     elif "Feminino - A1" in nome_campeonato:
         fases = ["1ª Fase", "Quartas de Final", "Semifinais", "Final"]
@@ -201,6 +199,10 @@ def obter_fase_jogo(numero_jogo, nome_campeonato):
         ]
         numero_fases = [32, 48, 56, 60, 62]
 
+    elif "Feminino - Sub-17" in nome_campeonato:
+        fases = ["1ª Fase", "Semifinais", "Final"]
+        numero_fases = [24, 28, 29]
+    
     elif "Feminino - Sub-20" in nome_campeonato:
         fases = ["1ª Fase", "Quartas de Final", "Semifinais", "Final"]
         numero_fases = [100, 104, 108, 109]
