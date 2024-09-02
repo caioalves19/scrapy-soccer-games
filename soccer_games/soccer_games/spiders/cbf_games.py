@@ -25,8 +25,7 @@ class CbfGamesSpider(scrapy.Spider):
             yield scrapy.Request(link, callback=self.parse_jogos)
 
     def parse_jogos(self, response):
-        data_jogo = tratar_data(response.css('.col-xs-6 span::text').get())
-
+        
         jogo = ItemLoader(item=SoccerGamesItem(), response=response)
 
         nome_campeonato = obter_nome_campeonato(response)
@@ -53,6 +52,7 @@ class CbfGamesSpider(scrapy.Spider):
 
         numero_jogo = int(response.url.split('/')[-1].split('?')[0])
         rodada_jogo = obter_rodada_jogo(nome_campeonato, numero_jogo)
+        data_jogo = tratar_data(response.css('.col-xs-6 span::text').get(), rodada_jogo)
 
         hora_jogo = tratar_hora(response.css(
             '.col-xs-6 .text-6::text').get())

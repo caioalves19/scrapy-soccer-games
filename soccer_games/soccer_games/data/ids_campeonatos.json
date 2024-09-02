@@ -1,4 +1,7 @@
 {
+    "Libertadores - Única": 190,
+    "Sul-Americana - Única": 191,
+
     "Brasileirão - Série A": 151,
     "Brasileirão - Série B": 152,
     "Brasileirão - Série C": 153,
@@ -13,13 +16,19 @@
     "Brasileirão Feminino - Sub-20": 858729,
     "Brasileirão Feminino - Sub-17": 858719,
     
-    "Copa do Brasil - Copa do Brasil -": 154,
-    "Copa do Brasil Sub-17 - Única": 247,
-    "Copa do Brasil Sub-20 - Única": 219,
+    "Copa do Brasil - Única": 154,
+    "Copa do Brasil - Sub-17": 247,
+    "Copa do Brasil - Sub-20": 219,
+
+    "Supercopa Feminina - Única": 1544195,
     
-    "Copa do Nordeste - Copa do Nordeste -": 220,
+    "Copa do Nordeste - Única": 220,
     "Copa Verde - Única": 221,
 
+    "Paulista - A1": 147,
+    "Paulista - A2": 148,
+    "Paulista - A3": 149,
+    "Paulista - A4": 1941016,
     "Paulista - 2ª Divisão": 150,
     "Copa Paulista - Única": 180,
 
@@ -27,8 +36,11 @@
     "Paulista Sub-17 - Paulista Sub-17 -": 232,
     "Paulista Sub-20 - 1ª Divisão": 233,
     
-    "Paulista Feminino - Paulista Feminino -": 237,
+    "Paulista Feminino - Única": 237,
     "Paulista Feminino - Sub-20": 1634915,
+
+    "Copa São Paulo Júnior - Única": 197,
+    "Copa São Paulo Feminina - Única": 1955086,
 
     "Alemão - Alemão -": 184, 
     "Espanhol - Espanhol -": 185,
@@ -36,5 +48,6 @@
     "Inglês - Inglês -": 224,
     "Italiano - Italiano -": 187,
     "Português - Português -": 186,
-    "Saudita - Única": 1892165
+    "Saudita - Única": 1892165,
+    "Copa Africana das Nações - Única": 240
 }

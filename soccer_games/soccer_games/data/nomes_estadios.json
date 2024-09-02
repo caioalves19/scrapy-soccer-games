@@ -1,9 +1,13 @@
 {
+    "Eucaliptos ( Ivoti)": "Eucaliptos",
+    "Da Gávea": "Gávea",
+    "Santa Cruz": "Arena NicNet",
     "1º de Maio": "Primeiro de Maio",
     "Ademar Pereira de Barros": "Arena Fonte Luminosa",
     "Alberto J. Armando": "La Bombonera",
     "Antônio Carneiro": "Carneirão",
     "Antonio Gomes Martins": "Fortaleza",
+    "Centro Esportivo Recreativo Educativo do Trabalhor": "CERET",
     "Antonio Lins Ribeiro Guimarães": "Antônio Guimarães",
     "Antonio Soares de Oliveira": "Antônio Soares de Oliveira",
     "Antonio Vespucio Liberti": "Monumental de Núñez",
@@ -48,5 +52,8 @@
     "Raimundo Sampaio": "Independência",
     "SESC Alterosas": "Sesc Alterosas",
     "SESC Campestre": "Sesc Campestre",
-    "Urbano Caldeira": "Vila Belmiro"
+    "SESC Protásio Alves": "Sesc Protásio Alves",
+    "Urbano Caldeira": "Vila Belmiro",
+    "Santa Cruz/Arena NicNet": "Arena NicNet",
+    "da Rua Bariri": "Rua Bariri"
 }

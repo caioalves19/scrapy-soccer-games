@@ -14,7 +14,7 @@ NEWSPIDER_MODULE = 'soccer_games.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows; Windows NT 6.0; WOW64 Trident/5.0)'
+USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows; Windows NT 6.0; WOW64 Trident/5.0)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -86,8 +86,8 @@ ITEM_PIPELINES = {
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-# HTTPCACHE_ENABLED = True
-# HTTPCACHE_EXPIRATION_SECS = 1800
+HTTPCACHE_ENABLED = True
+HTTPCACHE_EXPIRATION_SECS = 7200
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'

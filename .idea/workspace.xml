@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c7b66190-6041-46cf-a03a-8580b0121034" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/scrapy-soccer-games.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/data/ids_campeonatos.json" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/data/ids_campeonatos.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/data/nomes_cidades.json" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/data/nomes_cidades.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/data/nomes_estadios.json" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/data/nomes_estadios.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/data/nomes_times.json" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/data/nomes_times.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/modulos/modulos.py" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/modulos/modulos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/pipelines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/spiders/cbf_games.py" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/spiders/cbf_games.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/spiders/flashscores_games.py" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/spiders/flashscores_games.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/soccer_games/soccer_games/spiders/fpf_games.py" beforeDir="false" afterPath="$PROJECT_DIR$/soccer_games/soccer_games/spiders/fpf_games.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2ii5xqpB21ufSC58V2vuAeu33Vb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Caio/Projetos-Python/scrapy-soccer-games"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-d68999036c7f-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.14475.56" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c7b66190-6041-46cf-a03a-8580b0121034" name="Changes" comment="" />
+      <created>1719960807426</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719960807426</updated>
+    </task>
+    <servers />
+  </component>
+</project>
