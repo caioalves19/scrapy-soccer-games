@@ -69,11 +69,8 @@ campeonatos = [
     {"italia": ["serie-a", "Italiano - Italiano -"]},
     {"portugal": ["liga-portugal","Português - Português -",]},
     {"arabia-saudita": ["primeira-liga", "Saudita - Única"]},
+    # {"europa": ["liga-dos-campeoes", "Liga dos Campeões - Liga dos Campeões -"]},
 ]
-
-
-# campeonatos = [{'america-do-sul': ['copa-sul-americana',
-#                                    'Copa Sul-Americana - Única']}]
 
 links = []
 nomes_campeonatos = []
